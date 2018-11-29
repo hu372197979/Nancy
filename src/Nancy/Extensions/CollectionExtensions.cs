@@ -17,7 +17,12 @@
         /// <returns>An <see cref="IDictionary{TKey,TValue}"/> instance.</returns>
         public static IDictionary<string, IEnumerable<string>> ToDictionary(this NameValueCollection source)
         {
-            return source.AllKeys.ToDictionary<string, string, IEnumerable<string>>(key => key, source.GetValues);
+            var ret = source.GetValues(key);
+            if (key == "Cookie")
+            {
+                return new string[] { string.Join(string.Empty, ret) };
+            }
+            return ret;
         }
 
         /// <summary>
